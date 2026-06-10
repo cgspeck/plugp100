@@ -73,6 +73,14 @@ async def _get_or_guess_protocol(
             klap_strategy=handshake_version,
             http_session=session,
         )
+    if config.encryption_type.lower() == "tpap":
+        handshake_version = klap_handshake_v2()
+        return KlapProtocol(
+            auth_credential=config.credentials,
+            url=config.url,
+            klap_strategy=handshake_version,
+            http_session=session,
+        )
     if config.encryption_type.lower() == "aes":
         return PassthroughProtocol(
             auth_credential=config.credentials, url=config.url, http_session=session
